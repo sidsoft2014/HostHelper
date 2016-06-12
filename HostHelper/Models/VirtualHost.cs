@@ -12,14 +12,27 @@ namespace HostHelper.Models
         private string _serverAlias;
         private string _errorLog;
         private string _customLog;
+        private bool _isActive;
 
-        public VirtualHost(string hostName, string serverName, string documentRoot)
+        public VirtualHost(string hostName, string serverName, string documentRoot, bool isActive)
         {
             VirtualHostName = hostName;
             ServerName = serverName;
             DocumentRoot = documentRoot;
+            IsActive = isActive;
         }
 
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
+        }
         public string VirtualHostName
         {
             get
@@ -109,41 +122,91 @@ namespace HostHelper.Models
             }
         }
 
-        public const string RegexHost = @"<VirtualHost ([\S]*)>";
-        public const string RegexServerAdmin = @"ServerAdmin ([\S]*)";
-        public const string RegexDocumentRoot = "DocumentRoot \"([\\S]*)\"";
-        public const string RegexServerName = @"ServerName ([\S]*)";
-        public const string RegexServerAlias = @"ServerAlias ([\S]*)";
-        public const string RegexErrorLog = "ErrorLog \"([\\S]*)\"";
-        public const string RegexCustomLog = "CustomLog \"([\\S]*)\"";
-
-        public string GenerateText()
+        public string GenerateText(bool addNameVirtualHost = false)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"NameVirtualHost {VirtualHostName}");
+            string line = "";
+
+            // Add NameVirtualHost line if requsted.
+            if (addNameVirtualHost)
+            {
+                line = IsActive ?
+                    $"NameVirtualHost {VirtualHostName}"
+                    : $"##NameVirtualHost {VirtualHostName}";
+                sb.AppendLine(line);
+            }
+
+            // Add VirtualHost opening tag, VirtualHostName and port of required.
             if (Port < 1)
-                sb.AppendLine($"<VirtualHost {VirtualHostName}>");
+            {
+                line = IsActive ?
+                    $"<VirtualHost {VirtualHostName}>"
+                    : $"##<VirtualHost {VirtualHostName}>";
+                sb.AppendLine(line);
+            }
             else
-                sb.AppendLine($"<VirtualHost {VirtualHostName}:{Port}>");
+            {
+                line = IsActive ?
+                    $"<VirtualHost {VirtualHostName}:{Port}>"
+                    : $"##<VirtualHost {VirtualHostName}:{Port}>";
+                sb.AppendLine(line);
+            }
 
+            // Add ServerAdmin if required
             if (!string.IsNullOrEmpty(ServerAdmin))
-                sb.AppendLine($"ServerAdmin {ServerAdmin}");
+            {
+                line = IsActive ?
+                    $"\tServerAdmin {ServerAdmin}"
+                    : $"\t##ServerAdmin {ServerAdmin}";
+                sb.AppendLine(line);
+            }
 
-            sb.AppendLine($"DocumentRoot \"{DocumentRoot}\"");
-            sb.AppendLine($"ServerName {ServerName}");
+            // Add DocumentRoot
+            line = IsActive ?
+                $"\tDocumentRoot \"{DocumentRoot}\""
+                : $"\t##DocumentRoot \"{DocumentRoot}\"";
+            sb.AppendLine(line);
 
+            // Add ServerName
+            line = IsActive ?
+                $"\tServerName {ServerName}"
+                : $"\t##ServerName {ServerName}";
+            sb.AppendLine(line);
+
+            // Add ServerAlias if required
             if (!string.IsNullOrEmpty(ServerAlias))
-                sb.AppendLine($"ServerAlias {ServerAlias}");
-            if (!string.IsNullOrEmpty(ErrorLog))
-                sb.AppendLine($"ErrorLog \"{ErrorLog}\"");
-            if (!string.IsNullOrEmpty(CustomLog))
-                sb.AppendLine($"CustomLog \"{CustomLog}\" common");
+            {
+                line = IsActive ?
+                    $"\tServerAlias {ServerAlias}"
+                    : $"\t##ServerAlias {ServerAlias}";
+                sb.AppendLine(line);
+            }
 
-            sb.AppendLine($"</VirtualHost>");
+            // Add ErrorLog if required
+            if (!string.IsNullOrEmpty(ErrorLog))
+            {
+                line = IsActive ?
+                    $"\tErrorLog \"{ErrorLog}\""
+                    : $"\t##ErrorLog \"{ErrorLog}\"";
+                sb.AppendLine(line);
+            }
+
+            // Add CustomLog if required
+            if (!string.IsNullOrEmpty(CustomLog))
+            {
+                line = IsActive ?
+                    $"\tCustomLog \"{CustomLog}\" common"
+                    : $"\t##CustomLog \"{CustomLog}\" common";
+                sb.AppendLine(line);
+            }
+
+            // Add VirtualHost closing tag.
+            line = IsActive ?
+                "</VirtualHost>"
+                : "##</VirtualHost>";
+            sb.AppendLine(line);
+
             return sb.ToString();
         }
-
-
-
     }
 }

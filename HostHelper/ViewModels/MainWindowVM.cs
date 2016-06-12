@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HostHelper.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace HostHelper.ViewModels
 
         public MainWindowVM()
         {
+            var vhosts = VirtualHostService.GetVirtualHosts();
+            var x = 0;
         }
 
         public string Name
