@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\HostFileEntry.cs" />
     <Compile Include="Models\VirtualHost.cs" />
+    <Compile Include="Services\HostFileService.cs" />
     <Compile Include="Services\VirtualHostService.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Page Include="Views\MainWindow.xaml">

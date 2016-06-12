@@ -1,6 +1,5 @@
-﻿using System;
+﻿using HostHelper.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HostHelper.Services;
 
 namespace Tests
 {
