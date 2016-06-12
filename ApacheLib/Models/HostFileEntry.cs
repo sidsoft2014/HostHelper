@@ -1,4 +1,4 @@
-﻿namespace HostHelper.Models
+﻿namespace ApacheLib.Models
 {
     public class HostFileEntry
     {

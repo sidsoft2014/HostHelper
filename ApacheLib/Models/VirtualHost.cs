@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace HostHelper.Models
+namespace ApacheLib.Models
 {
     public class VirtualHost
     {
@@ -136,7 +136,7 @@ namespace HostHelper.Models
                 sb.AppendLine(line);
             }
 
-            // Add VirtualHost opening tag, VirtualHostName and port of required.
+            // Add VirtualHost opening tag, VirtualHostName and port if required.
             if (Port < 1)
             {
                 line = IsActive ?

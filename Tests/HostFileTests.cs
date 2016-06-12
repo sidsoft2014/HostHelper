@@ -1,5 +1,4 @@
-﻿using HostHelper.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
@@ -9,9 +8,7 @@ namespace Tests
         [TestMethod]
         public void TestHostFileSerialisation()
         {
-            var txtBlocks = HostFileService.GetAllHosts();
 
-            Assert.AreEqual("", "");
         }
     }
 }

@@ -4,15 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HostHelper"
-        xmlns:vm="clr-namespace:HostHelper.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="700">
-    <Window.Resources>
-        <vm:MainWindowVM x:Key="mainVm" x:Name="mVm"/>
-    </Window.Resources>
-    <Window.DataContext>
-        <vm:MainWindowVM />
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32px" />

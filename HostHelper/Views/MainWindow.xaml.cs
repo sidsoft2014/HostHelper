@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ApacheLib.ViewModels;
+using HostHelper.Services;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HostHelper
 {
@@ -23,6 +12,8 @@ namespace HostHelper
         public MainWindow()
         {
             InitializeComponent();
+            MainWindowVM vm = new MainWindowVM(new FileService());
+            this.DataContext = vm;
         }
     }
 }

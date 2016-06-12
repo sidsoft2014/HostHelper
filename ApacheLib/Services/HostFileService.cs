@@ -1,20 +1,30 @@
-﻿using HostHelper.Models;
+﻿using ApacheLib.Interfaces;
+using ApacheLib.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 
-namespace HostHelper.Services
+namespace ApacheLib.Services
 {
-    public static class HostFileService
+    public class HostFileService
     {
+        private IFileService FileService;
         private const string _regexHost = @"(([#\s]+)([\d]+\.[\d]+\.[\d]+\.[\d]+)[\W]+([\S]+))|(([#\s]+)(::[\d])[\W]+([\S]+))";
-        public static List<HostFileEntry> GetAllHosts()
+
+
+        public HostFileService(IFileService fileService)
         {
-            if (!File.Exists(Properties.Settings.Default.HostFile))
+            if (fileService == null)
+                throw new ArgumentNullException("fileService");
+            this.FileService = fileService;
+        }
+
+        public List<HostFileEntry> GetAllHosts()
+        {
+            if (!FileService.FileExists(AppSettings.HostFilePath))
                 return null;
 
-            var text = File.ReadAllText(Properties.Settings.Default.HostFile);
+            var text = FileService.ReadAllText(AppSettings.HostFilePath);
             var matches = Regex.Matches(text, _regexHost);
             if (matches.Count == 0)
                 return null;

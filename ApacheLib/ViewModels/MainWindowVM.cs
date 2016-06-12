@@ -1,22 +1,19 @@
-﻿using HostHelper.Models;
-using HostHelper.Services;
-using System;
-using System.Collections.Generic;
+﻿using ApacheLib.Interfaces;
+using ApacheLib.Models;
+using ApacheLib.Services;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HostHelper.ViewModels
+namespace ApacheLib.ViewModels
 {
-    class MainWindowVM : ViewModelBase
+    public class MainWindowVM : ViewModelBase
     {
+        private VirtualHostService _vhs;
         private ObservableCollection<HostFileEntry> _hostFileEntries;
         private ObservableCollection<VirtualHost> _vHosts;
 
-        public MainWindowVM()
+        public MainWindowVM(IFileService fileService)
         {
-
+            _vhs = new VirtualHostService(fileService);
         }
 
         public string Name
@@ -44,7 +41,7 @@ namespace HostHelper.ViewModels
             {
                 if (_vHosts == null)
                 {
-                    var hosts = VirtualHostService.GetVirtualHosts();
+                    var hosts = _vhs.GetVirtualHosts();
                     _vHosts = new ObservableCollection<VirtualHost>(hosts);
                 }
                 return _vHosts;

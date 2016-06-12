@@ -1,30 +1,37 @@
-﻿using HostHelper.Models;
+﻿using ApacheLib.Interfaces;
+using ApacheLib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace HostHelper.Services
+namespace ApacheLib.Services
 {
-    public static class VirtualHostService
+    public class VirtualHostService
     {
-        public const string RegexHost = @"(#?#?)<VirtualHost ([\S]*)>";
-        public const string RegexServerAdmin = @"(#?#?)ServerAdmin ([\S]*)";
-        public const string RegexDocumentRoot = "(#?#?)DocumentRoot \"?([\\S]+)\"?";
-        public const string RegexServerName = @"(#?#?)ServerName ([\S]*)";
-        public const string RegexServerAlias = @"(#?#?)ServerAlias ([\S]*)";
-        public const string RegexErrorLog = "(#?#?)ErrorLog \"([\\S]*)\"";
-        public const string RegexCustomLog = "(#?#?)CustomLog \"([\\S]*)\"";
+        private IFileService FileService;
+        private const string RegexHost = @"(#?#?)<VirtualHost ([\S]*)>";
+        private const string RegexServerAdmin = @"(#?#?)ServerAdmin ([\S]*)";
+        private const string RegexDocumentRoot = "(#?#?)DocumentRoot \"?([\\S]+)\"?";
+        private const string RegexServerName = @"(#?#?)ServerName ([\S]*)";
+        private const string RegexServerAlias = @"(#?#?)ServerAlias ([\S]*)";
+        private const string RegexErrorLog = "(#?#?)ErrorLog \"([\\S]*)\"";
+        private const string RegexCustomLog = "(#?#?)CustomLog \"([\\S]*)\"";
 
-        public static List<string> GetVirtualHostTextBlocks()
+        public VirtualHostService(IFileService fileService)
         {
-            if (!File.Exists(Properties.Settings.Default.VHostFile))
-                throw new FileNotFoundException("Could not find virtual host file at " + Properties.Settings.Default.VHostFile);
+            if (fileService == null)
+                throw new ArgumentNullException("fileService");
+            this.FileService = fileService;
+        }
 
-            var text = File.ReadAllLines(Properties.Settings.Default.VHostFile);
+        public List<string> GetVirtualHostTextBlocks()
+        {
+            if (!FileService.FileExists(AppSettings.VirtualHostsFilePath))
+                throw new FileNotFoundException("Could not find virtual host file at " + AppSettings.VirtualHostsFilePath);
+
+            var text = FileService.ReadAllLines(AppSettings.VirtualHostsFilePath);
             var blocks = new List<string>();
             for (int ii = 0; ii < text.Length; ii++)
             {
@@ -43,7 +50,7 @@ namespace HostHelper.Services
             return blocks;
         }
 
-        public static List<VirtualHost> GetVirtualHosts()
+        public List<VirtualHost> GetVirtualHosts()
         {
             var blocks = new List<VirtualHost>();
             foreach (var block in GetVirtualHostTextBlocks())
@@ -53,7 +60,7 @@ namespace HostHelper.Services
             return blocks;
         }
 
-        public static VirtualHost ConvertToVirtualHost(string input)
+        public VirtualHost ConvertToVirtualHost(string input)
         {
             // Use regex to get try and get essential details. Massive use of Elvis opperator here.
             var active = Regex.Match(input, RegexHost)?.Groups[1]?.Value?.Trim() != "##";
@@ -91,7 +98,7 @@ namespace HostHelper.Services
             return vHost;
         }
 
-        private static string StandardiseLine(string input)
+        private string StandardiseLine(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return input;
