@@ -8,12 +8,14 @@ namespace ApacheLib.ViewModels
     public class MainWindowVM : ViewModelBase
     {
         private VirtualHostService _vhs;
+        private HostFileService _hfs;
         private ObservableCollection<HostFileEntry> _hostFileEntries;
         private ObservableCollection<VirtualHost> _vHosts;
 
-        public MainWindowVM(IFileService fileService)
+        public MainWindowVM(IFileService fileService, IAppSettings appSettings)
         {
-            _vhs = new VirtualHostService(fileService);
+            _vhs = new VirtualHostService(fileService, appSettings);
+            _hfs = new HostFileService(fileService, appSettings);
         }
 
         public string Name
@@ -24,11 +26,16 @@ namespace ApacheLib.ViewModels
         {
             get
             {
+                if(_hostFileEntries == null)
+                {
+                    var hosts = _hfs.GetAllHosts();
+                    _hostFileEntries = new ObservableCollection<HostFileEntry>(hosts);
+                }
                 return _hostFileEntries;
             }
             private set
             {
-                if (_hostFileEntries != value)
+                if(value != _hostFileEntries)
                 {
                     _hostFileEntries = value;
                     OnPropertyChanged();
@@ -45,6 +52,14 @@ namespace ApacheLib.ViewModels
                     _vHosts = new ObservableCollection<VirtualHost>(hosts);
                 }
                 return _vHosts;
+            }
+            private set
+            {
+                if (value != _vHosts)
+                {
+                    _vHosts = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }

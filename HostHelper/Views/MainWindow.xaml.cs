@@ -12,7 +12,7 @@ namespace HostHelper
         public MainWindow()
         {
             InitializeComponent();
-            MainWindowVM vm = new MainWindowVM(new FileService());
+            MainWindowVM vm = new MainWindowVM(new FileService(), new ApacheSettings());
             this.DataContext = vm;
         }
     }

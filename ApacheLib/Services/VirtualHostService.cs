@@ -8,9 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace ApacheLib.Services
 {
-    public class VirtualHostService
+    internal class VirtualHostService
     {
         private IFileService FileService;
+        private IAppSettings AppSettings;
         private const string RegexHost = @"(#?#?)<VirtualHost ([\S]*)>";
         private const string RegexServerAdmin = @"(#?#?)ServerAdmin ([\S]*)";
         private const string RegexDocumentRoot = "(#?#?)DocumentRoot \"?([\\S]+)\"?";
@@ -19,11 +20,15 @@ namespace ApacheLib.Services
         private const string RegexErrorLog = "(#?#?)ErrorLog \"([\\S]*)\"";
         private const string RegexCustomLog = "(#?#?)CustomLog \"([\\S]*)\"";
 
-        public VirtualHostService(IFileService fileService)
+        public VirtualHostService(IFileService fileService, IAppSettings appSettings)
         {
             if (fileService == null)
                 throw new ArgumentNullException("fileService");
+            else if (appSettings == null)
+                throw new ArgumentNullException("appSettings");
+
             this.FileService = fileService;
+            this.AppSettings = appSettings;
         }
 
         public List<string> GetVirtualHostTextBlocks()

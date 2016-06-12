@@ -30,20 +30,16 @@
                 <ColumnDefinition Width="64"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False">
+            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileEntries}" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Resources>
-                    <Style TargetType="TextBlock" x:Key="txtVHosts" BasedOn="{StaticResource txtListItem}">
-                        <Setter Property="TextAlignment" Value="Right"/>
-                    </Style>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Width="64" />
-                    <DataGridTextColumn Header="Url" Width="1*"/>
-                    <DataGridTextColumn Header="Port" Width="32" />
-                    <DataGridTextColumn Header="Document Root" Width="1*"/>
+                    <DataGridTextColumn Header="IP" Width="1*" Binding="{Binding IP}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Url" Width="1*" Binding="{Binding Url}" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Column="1" x:Name="grdCenter">

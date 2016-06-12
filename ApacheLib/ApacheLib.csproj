@@ -37,7 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="Interfaces\IAppSettings.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Models\HostFileEntry.cs" />
     <Compile Include="Models\VirtualHost.cs" />

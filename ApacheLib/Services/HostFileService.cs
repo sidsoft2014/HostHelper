@@ -6,17 +6,21 @@ using System.Text.RegularExpressions;
 
 namespace ApacheLib.Services
 {
-    public class HostFileService
+    internal class HostFileService
     {
         private IFileService FileService;
+        private IAppSettings AppSettings;
         private const string _regexHost = @"(([#\s]+)([\d]+\.[\d]+\.[\d]+\.[\d]+)[\W]+([\S]+))|(([#\s]+)(::[\d])[\W]+([\S]+))";
 
-
-        public HostFileService(IFileService fileService)
+        public HostFileService(IFileService fileService, IAppSettings appSettings)
         {
             if (fileService == null)
                 throw new ArgumentNullException("fileService");
+            else if (appSettings == null)
+                throw new ArgumentNullException("appSettings");
+
             this.FileService = fileService;
+            this.AppSettings = appSettings;
         }
 
         public List<HostFileEntry> GetAllHosts()
