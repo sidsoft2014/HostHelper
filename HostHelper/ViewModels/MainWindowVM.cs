@@ -1,6 +1,8 @@
-﻿using HostHelper.Services;
+﻿using HostHelper.Models;
+using HostHelper.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,47 +11,43 @@ namespace HostHelper.ViewModels
 {
     class MainWindowVM : ViewModelBase
     {
-        private string[] _hostFileText = new[] { "Here is hosts text", "Here is hosts text again", "And again here is hosts text again" };
-        private string[] _vHosts = new[] { "V Host 1", "V host 2", "www.hdsjdhaskjd.ddhsajdak.sadjhaskdhaskdj.uk.net.com" };
+        private ObservableCollection<HostFileEntry> _hostFileEntries;
+        private ObservableCollection<VirtualHost> _vHosts;
 
         public MainWindowVM()
         {
-            var vhosts = VirtualHostService.GetVirtualHosts();
-            var x = 0;
+
         }
 
         public string Name
         {
             get { return "Some name"; }
         }
-        public string[] HostFileText
+        public ObservableCollection<HostFileEntry> HostFileEntries
         {
             get
             {
-                return _hostFileText;
+                return _hostFileEntries;
             }
             private set
             {
-                if (_hostFileText != value)
+                if (_hostFileEntries != value)
                 {
-                    _hostFileText = value;
+                    _hostFileEntries = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string[] VirtualHosts
+        public ObservableCollection<VirtualHost> VirtualHosts
         {
             get
             {
-                return _vHosts;
-            }
-            private set
-            {
-                if (_vHosts != value)
+                if (_vHosts == null)
                 {
-                    _vHosts = value;
-                    OnPropertyChanged();
+                    var hosts = VirtualHostService.GetVirtualHosts();
+                    _vHosts = new ObservableCollection<VirtualHost>(hosts);
                 }
+                return _vHosts;
             }
         }
     }
