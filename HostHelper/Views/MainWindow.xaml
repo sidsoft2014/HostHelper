@@ -1,0 +1,87 @@
+﻿<Window x:Class="HostHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HostHelper"
+        xmlns:vm="clr-namespace:HostHelper.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="700">
+    <Window.Resources>
+        <vm:MainWindowVM x:Key="mainVm" x:Name="mVm"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainWindowVM />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32px" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="128px" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" x:Key="txtListItem">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Margin" Value="0,2,0,2"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid Grid.Row="0">
+            <TextBlock Text="{Binding Name}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="64"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileText}" AutoGenerateColumns="False">
+                <DataGrid.Resources>
+                    <Style TargetType="TextBlock" x:Key="txtVHosts" BasedOn="{StaticResource txtListItem}">
+                        <Setter Property="TextAlignment" Value="Right"/>
+                    </Style>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Width="64" />
+                    <DataGridTextColumn Header="Url" Width="1*"/>
+                    <DataGridTextColumn Header="Port" Width="32" />
+                    <DataGridTextColumn Header="Document Root" Width="1*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Column="1" x:Name="grdCenter">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button>Hi</Button>
+                </StackPanel>
+            </Grid>
+            <DataGrid Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False">
+                <DataGrid.Resources>
+                    <Style TargetType="TextBlock" x:Key="txtVHosts" BasedOn="{StaticResource txtListItem}">
+                        <Setter Property="TextAlignment" Value="Right"/>
+                    </Style>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Width="64" />
+                    <DataGridTextColumn Header="Url" Width="1*"/>
+                    <DataGridTextColumn Header="Port" Width="32" />
+                    <DataGridTextColumn Header="Document Root" Width="1*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+        </Grid>
+    </Grid>
+</Window>
