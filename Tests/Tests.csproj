@@ -55,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HostHelper\HostHelper.csproj">
+    <ProjectReference Include="..\HostHelper\UI.WPF.csproj">
       <Project>{e9f6ca36-78f4-47c7-bd84-b1a9b47d5c33}</Project>
-      <Name>HostHelper</Name>
+      <Name>UI.WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

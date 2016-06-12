@@ -1,7 +1,7 @@
 ﻿using ApacheLib.Interfaces;
 using System.IO;
 
-namespace HostHelper.Services
+namespace UI.WPF.Services
 {
     public class FileService : IFileService
     {

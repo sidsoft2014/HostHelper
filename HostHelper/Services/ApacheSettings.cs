@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HostHelper.Services
+namespace UI.WPF.Services
 {
     public class ApacheSettings : IAppSettings
     {

@@ -1,12 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HostHelper.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="HostFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Windows\System32\drivers\etc\hosts</Value>
-    </Setting>
-    <Setting Name="VHostFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\xampp\apache\conf\extra\httpd-vhosts.conf</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

@@ -12,10 +12,10 @@ namespace ApacheLib.ViewModels
         private ObservableCollection<HostFileEntry> _hostFileEntries;
         private ObservableCollection<VirtualHost> _vHosts;
 
-        public MainWindowVM(IFileService fileService, IAppSettings appSettings)
+        public MainWindowVM()
         {
-            _vhs = new VirtualHostService(fileService, appSettings);
-            _hfs = new HostFileService(fileService, appSettings);
+            _vhs = new VirtualHostService();
+            _hfs = new HostFileService();
         }
 
         public string Name

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostHelper", "HostHelper\HostHelper.csproj", "{E9F6CA36-78F4-47C7-BD84-B1A9B47D5C33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.WPF", "HostHelper\UI.WPF.csproj", "{E9F6CA36-78F4-47C7-BD84-B1A9B47D5C33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{26A6EBFD-53D6-4B22-8F0C-CAE7F4DCB9FE}"
 EndProject

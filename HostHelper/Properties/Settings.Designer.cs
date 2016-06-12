@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HostHelper.Properties {
+namespace UI.WPF.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,30 +20,6 @@ namespace HostHelper.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Windows\\System32\\drivers\\etc\\hosts")]
-        public string HostFile {
-            get {
-                return ((string)(this["HostFile"]));
-            }
-            set {
-                this["HostFile"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\xampp\\apache\\conf\\extra\\httpd-vhosts.conf")]
-        public string VHostFile {
-            get {
-                return ((string)(this["VHostFile"]));
-            }
-            set {
-                this["VHostFile"] = value;
             }
         }
     }

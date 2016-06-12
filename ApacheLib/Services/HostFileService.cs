@@ -8,27 +8,20 @@ namespace ApacheLib.Services
 {
     internal class HostFileService
     {
-        private IFileService FileService;
-        private IAppSettings AppSettings;
         private const string _regexHost = @"(([#\s]+)([\d]+\.[\d]+\.[\d]+\.[\d]+)[\W]+([\S]+))|(([#\s]+)(::[\d])[\W]+([\S]+))";
 
-        public HostFileService(IFileService fileService, IAppSettings appSettings)
+        public HostFileService()
         {
-            if (fileService == null)
-                throw new ArgumentNullException("fileService");
-            else if (appSettings == null)
-                throw new ArgumentNullException("appSettings");
-
-            this.FileService = fileService;
-            this.AppSettings = appSettings;
+            if (SysSettings.FileService == null || SysSettings.AppSettings == null)
+                throw new InvalidOperationException("Cannot start until SysSettings.Init has been run");
         }
 
         public List<HostFileEntry> GetAllHosts()
         {
-            if (!FileService.FileExists(AppSettings.HostFilePath))
+            if (!SysSettings.FileService.FileExists(SysSettings.AppSettings.HostFilePath))
                 return null;
 
-            var text = FileService.ReadAllText(AppSettings.HostFilePath);
+            var text = SysSettings.FileService.ReadAllText(SysSettings.AppSettings.HostFilePath);
             var matches = Regex.Matches(text, _regexHost);
             if (matches.Count == 0)
                 return null;

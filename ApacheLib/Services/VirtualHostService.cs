@@ -10,8 +10,6 @@ namespace ApacheLib.Services
 {
     internal class VirtualHostService
     {
-        private IFileService FileService;
-        private IAppSettings AppSettings;
         private const string RegexHost = @"(#?#?)<VirtualHost ([\S]*)>";
         private const string RegexServerAdmin = @"(#?#?)ServerAdmin ([\S]*)";
         private const string RegexDocumentRoot = "(#?#?)DocumentRoot \"?([\\S]+)\"?";
@@ -20,23 +18,18 @@ namespace ApacheLib.Services
         private const string RegexErrorLog = "(#?#?)ErrorLog \"([\\S]*)\"";
         private const string RegexCustomLog = "(#?#?)CustomLog \"([\\S]*)\"";
 
-        public VirtualHostService(IFileService fileService, IAppSettings appSettings)
+        public VirtualHostService()
         {
-            if (fileService == null)
-                throw new ArgumentNullException("fileService");
-            else if (appSettings == null)
-                throw new ArgumentNullException("appSettings");
-
-            this.FileService = fileService;
-            this.AppSettings = appSettings;
+            if (SysSettings.FileService == null || SysSettings.AppSettings == null)
+                throw new InvalidOperationException("Cannot start until SysSettings.Init has been run");
         }
 
         public List<string> GetVirtualHostTextBlocks()
         {
-            if (!FileService.FileExists(AppSettings.VirtualHostsFilePath))
-                throw new FileNotFoundException("Could not find virtual host file at " + AppSettings.VirtualHostsFilePath);
+            if (!SysSettings.FileService.FileExists(SysSettings.AppSettings.VirtualHostsFilePath))
+                throw new FileNotFoundException("Could not find virtual host file at " + SysSettings.AppSettings.VirtualHostsFilePath);
 
-            var text = FileService.ReadAllLines(AppSettings.VirtualHostsFilePath);
+            var text = SysSettings.FileService.ReadAllLines(SysSettings.AppSettings.VirtualHostsFilePath);
             var blocks = new List<string>();
             for (int ii = 0; ii < text.Length; ii++)
             {
@@ -71,7 +64,7 @@ namespace ApacheLib.Services
             var active = Regex.Match(input, RegexHost)?.Groups[1]?.Value?.Trim() != "##";
             var host = Regex.Match(input, RegexHost)?.Groups[2]?.Value?.Trim().Split(':'); // Split into name and port.
             var serverName = Regex.Match(input, RegexServerName)?.Groups[2]?.Value?.Trim();
-            var docRoot = Regex.Match(input, RegexDocumentRoot)?.Groups[2]?.Value?.Trim().Replace("\"",string.Empty);
+            var docRoot = Regex.Match(input, RegexDocumentRoot)?.Groups[2]?.Value?.Trim().Replace("\"", string.Empty);
 
             // Check we have required fields.
             if (string.IsNullOrEmpty(host[0]) || string.IsNullOrEmpty(serverName) || string.IsNullOrEmpty(docRoot))

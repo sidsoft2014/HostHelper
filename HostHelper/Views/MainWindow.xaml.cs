@@ -1,8 +1,8 @@
 ﻿using ApacheLib.ViewModels;
-using HostHelper.Services;
+using UI.WPF.Services;
 using System.Windows;
 
-namespace HostHelper
+namespace UI.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -11,8 +11,9 @@ namespace HostHelper
     {
         public MainWindow()
         {
+            ApacheLib.SysSettings.Init(new FileService(), new ApacheSettings());
             InitializeComponent();
-            MainWindowVM vm = new MainWindowVM(new FileService(), new ApacheSettings());
+            MainWindowVM vm = new MainWindowVM();
             this.DataContext = vm;
         }
     }
