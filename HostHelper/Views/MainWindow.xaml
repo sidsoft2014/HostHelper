@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="700">
+        Title="MainWindow" Height="500" Width="700">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32px" />
             <RowDefinition Height="1*" />
-            <RowDefinition Height="128px" />
+            <RowDefinition Height="256px" />
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="TextBlock" x:Key="txtListItem">
@@ -24,13 +24,14 @@
             <TextBlock Text="{Binding Name}"/>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="64"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileEntries}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="FullRow"
+                      SelectionMode="Single" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
@@ -52,25 +53,57 @@
                     <Button>Hi</Button>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
+            <DataGrid Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False" IsReadOnly="True"
+                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Resources>
-                    <Style TargetType="TextBlock" x:Key="txtVHosts" BasedOn="{StaticResource txtListItem}">
-                        <Setter Property="TextAlignment" Value="Right"/>
-                    </Style>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="VirtualHost" Width="1*" Binding="{Binding VirtualHostName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ServerName" Width="2*" Binding="{Binding ServerName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Port" Width="36" Binding="{Binding Port}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ServerName" Width="1*" Binding="{Binding ServerName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Port" Width="48" Binding="{Binding Port}" IsReadOnly="True"/>
                     <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="5" DataContext="{Binding SelectedVirtualHost}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Grid.Resources>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="0,0,5,0">
+                <Label>Virtual Host:</Label>
+                <TextBox Text="{Binding VirtualHostName}" />
+                <Label>Port:</Label>
+                <TextBox Text="{Binding Port, FallbackValue=80, TargetNullValue=80}" />
+                <Label>Server Name:</Label>
+                <TextBox Text="{Binding ServerName}" />
+                <Label>Document Root:</Label>
+                <TextBox Text="{Binding DocumentRoot}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="5,0,0,0">
+                <Label>Server Alias:</Label>
+                <TextBox Text="{Binding ServerAlias, FallbackValue=N/A, TargetNullValue=N/A}" />
+                <Label>Server Admin:</Label>
+                <TextBox Text="{Binding ServerAdmin, FallbackValue=N/A, TargetNullValue=N/A}" />
+                <Label>Error Log:</Label>
+                <TextBox Text="{Binding ErrorLog, FallbackValue=N/A, TargetNullValue=N/A}" />
+                <Label>Custom Log:</Label>
+                <TextBox Text="{Binding CustomLog, FallbackValue=N/A, TargetNullValue=N/A}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
