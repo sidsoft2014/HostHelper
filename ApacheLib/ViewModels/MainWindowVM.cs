@@ -2,20 +2,21 @@
 using ApacheLib.Models;
 using ApacheLib.Services;
 using System.Collections.ObjectModel;
+using static ApacheLib.SysSettings;
 
 namespace ApacheLib.ViewModels
 {
     public class MainWindowVM : ViewModelBase
     {
-        private VirtualHostService _vhs;
-        private HostFileService _hfs;
         private ObservableCollection<HostFileEntry> _hostFileEntries;
         private ObservableCollection<VirtualHost> _vHosts;
+        private HostFileEntry _selectedHostFileEntry;
+        private VirtualHost _selectedVirtualHost;
 
         public MainWindowVM()
+            :base()
         {
-            _vhs = new VirtualHostService();
-            _hfs = new HostFileService();
+            
         }
 
         public string Name
@@ -28,7 +29,7 @@ namespace ApacheLib.ViewModels
             {
                 if(_hostFileEntries == null)
                 {
-                    var hosts = _hfs.GetAllHosts();
+                    var hosts = HFS.GetAllHosts();
                     _hostFileEntries = new ObservableCollection<HostFileEntry>(hosts);
                 }
                 return _hostFileEntries;
@@ -48,7 +49,7 @@ namespace ApacheLib.ViewModels
             {
                 if (_vHosts == null)
                 {
-                    var hosts = _vhs.GetVirtualHosts();
+                    var hosts = VHS.GetVirtualHosts();
                     _vHosts = new ObservableCollection<VirtualHost>(hosts);
                 }
                 return _vHosts;
@@ -58,6 +59,36 @@ namespace ApacheLib.ViewModels
                 if (value != _vHosts)
                 {
                     _vHosts = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public HostFileEntry SelectedHostFileEntry
+        {
+            get
+            {
+                return _selectedHostFileEntry;
+            }
+            set
+            {
+                if(value != _selectedHostFileEntry)
+                {
+                    _selectedHostFileEntry = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public VirtualHost SelectedVirtualHost
+        {
+            get
+            {
+                return _selectedVirtualHost;
+            }
+            set
+            {
+                if(value != _selectedVirtualHost)
+                {
+                    _selectedVirtualHost = value;
                     OnPropertyChanged();
                 }
             }

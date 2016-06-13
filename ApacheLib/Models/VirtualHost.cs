@@ -48,6 +48,8 @@ namespace ApacheLib.Models
         {
             get
             {
+                if (_port < 1)
+                    return 80;
                 return _port;
             }
             set
