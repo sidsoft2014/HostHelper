@@ -21,29 +21,42 @@
         </Grid.Resources>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="{Binding Name}"/>
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </Grid.Resources>
+            <Button HorizontalAlignment="Left">Locate Host File</Button>
+            <Button HorizontalAlignment="Right">Locate Virtual Host File</Button>
         </Grid>
 
         <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32px" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="64"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="FullRow"
-                      SelectionMode="Single" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Host File Entries" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False"
+                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="IP" Width="1*" Binding="{Binding IP}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Url" Width="1*" Binding="{Binding Url}" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="IP" Width="1*" Binding="{Binding IP}" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Grid.Column="1" x:Name="grdCenter">
+            
+            <Grid Grid.Row="1" Grid.Column="1" x:Name="grdCenter">
                 <StackPanel Orientation="Vertical">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
@@ -53,7 +66,9 @@
                     <Button>Hi</Button>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False" IsReadOnly="True"
+
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Virtual Hosts" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
@@ -63,7 +78,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ServerName" Width="1*" Binding="{Binding ServerName}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Port" Width="48" Binding="{Binding Port}" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive}" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
