@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICommandSet.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="SysSettings.cs" />
     <Compile Include="Interfaces\IAppSettings.cs" />

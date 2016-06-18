@@ -12,8 +12,9 @@ namespace UI.WPF
     {
         public MainWindow()
         {
-            ApacheLib.SysSettings.Init(new FileService(), new ApacheSettings());
             InitializeComponent();
+
+            ApacheLib.SysSettings.Init(new FileService(), new ApacheSettings());
             MainWindowVM vm = new MainWindowVM();
             this.DataContext = vm;
         }
