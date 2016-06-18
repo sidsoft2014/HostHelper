@@ -1,5 +1,10 @@
 ﻿using ApacheLib.Interfaces;
 using ApacheLib.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ApacheLib.ViewModels
 {
@@ -18,8 +23,9 @@ namespace ApacheLib.ViewModels
 
         public VirtualHostVM()
         {
+
         }
-        
+
         public VirtualHost SelectedVirtualHost
         {
             get
@@ -36,7 +42,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public bool IsActive
         {
             get
@@ -52,7 +57,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string VirtualHostName
         {
             get
@@ -68,7 +72,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public int Port
         {
             get
@@ -86,7 +89,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string ServerAdmin
         {
             get
@@ -102,7 +104,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string DocumentRoot
         {
             get
@@ -118,7 +119,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string ServerName
         {
             get
@@ -134,7 +134,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string ServerAlias
         {
             get
@@ -150,7 +149,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string ErrorLog
         {
             get
@@ -166,7 +164,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string CustomLog
         {
             get
@@ -198,7 +195,6 @@ namespace ApacheLib.ViewModels
             ErrorLog = SelectedVirtualHost.ErrorLog;
             CustomLog = SelectedVirtualHost.CustomLog;
         }
-
         private void ViewToModel()
         {
             if (SelectedVirtualHost == null)
@@ -223,11 +219,5 @@ namespace ApacheLib.ViewModels
 
             SelectedVirtualHost = vHost;
         }
-
-        public void SaveSelected()
-        {
-            ViewToModel();
-        }
     }
-
 }

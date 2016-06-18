@@ -15,6 +15,7 @@ namespace ApacheLib.ViewModels
         private IViewModel _currentViewModel;
 
         public MainWindowVM()
+            :base()
         {
 #if DEBUG
             CurrentViewModel = new VirtualHostVM();

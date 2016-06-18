@@ -1,5 +1,4 @@
-﻿using ApacheLib.Interfaces;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using static ApacheLib.SysSettings;
@@ -18,9 +17,7 @@ namespace ApacheLib.ViewModels
             {
                 throw new Exception("Apache lib not configured correctly. Ensure SysSettings.Init has run successfuly.");
             }
-            
         }
-        
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {

@@ -8,9 +8,9 @@
         Title="MainWindow" Height="500" Width="700">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
+            <RowDefinition Height="32px" />
             <RowDefinition Height="1*" />
-            <RowDefinition Height="256" />
+            <RowDefinition Height="256px" />
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="TextBlock" x:Key="txtListItem">
@@ -33,7 +33,7 @@
 
         <Grid Grid.Row="1" Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="32" />
+                <RowDefinition Height="32px" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
