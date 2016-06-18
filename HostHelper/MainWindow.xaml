@@ -43,7 +43,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Host File Entries" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False"
-                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       CanUserAddRows="False">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
@@ -79,7 +80,7 @@
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Virtual Hosts" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      LostFocus="DataGrid_LostFocus">
+                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>

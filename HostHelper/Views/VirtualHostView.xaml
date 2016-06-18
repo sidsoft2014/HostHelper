@@ -44,6 +44,6 @@
             <Label>Custom Log:</Label>
             <TextBox Text="{Binding CustomLog, FallbackValue=N/A, TargetNullValue=N/A, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <Button Grid.Row="2" Grid.Column="1">Save</Button>
+        <Button Name="btnSave" Grid.Row="2" Grid.Column="1" Margin="2" Click="btnSave_Click">Save</Button>
     </Grid>
 </UserControl>

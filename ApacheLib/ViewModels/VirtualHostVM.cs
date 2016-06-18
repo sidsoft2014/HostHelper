@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApacheLib.ViewModels
 {
-    public class VirtualHostVM : ViewModelBase, IViewModel
+    public class VirtualHostVM : ViewModelBase, IObjectViewModel
     {
         private VirtualHost _selectedVirtualHost;
         private bool _isActive;
@@ -20,6 +20,8 @@ namespace ApacheLib.ViewModels
         private string _serverAlias;
         private string _errorLog;
         private string _customLog;
+
+        public event EventHandler OnSaved;
 
         public VirtualHostVM()
         {
@@ -211,13 +213,18 @@ namespace ApacheLib.ViewModels
             SelectedVirtualHost.CustomLog = CustomLog;
         }
 
-        public void SetSelectedObject(dynamic obj)
+        public void SetSelectedObject(object obj)
         {
             var vHost = obj as VirtualHost;
             if (obj == null)
                 return;
 
             SelectedVirtualHost = vHost;
+        }
+        public void Save()
+        {
+            ViewToModel();
+            OnSaved?.Invoke(this, null);
         }
     }
 }

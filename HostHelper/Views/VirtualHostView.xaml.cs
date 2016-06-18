@@ -1,4 +1,5 @@
-﻿using ApacheLib.ViewModels;
+﻿using ApacheLib.Interfaces;
+using ApacheLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace UI.WPF.Views
         public VirtualHostView()
         {
             InitializeComponent();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = this.DataContext as IObjectViewModel;
+            if (vm != null)
+                vm.Save();
         }
     }
 }
