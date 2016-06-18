@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UI.WPF"
+        xmlns:local="clr-namespace:UI.WPF.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="700">
     <Grid>
@@ -37,9 +37,9 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="64"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition MinWidth="64" MaxWidth="128"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Host File Entries" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False"
@@ -55,21 +55,31 @@
                     <DataGridCheckBoxColumn Header="Active?" Width="48" Binding="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            
+
             <Grid Grid.Row="1" Grid.Column="1" x:Name="grdCenter">
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
-                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="Margin" Value="2"/>
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button>Hi</Button>
+                    
+                    <TextBlock>New</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button ToolTip="New Host File Entry">&lt;&lt;</Button>
+                        <Button ToolTip="New Virtual Host">&gt;&gt;</Button>
+                    </StackPanel>
+                    
                 </StackPanel>
             </Grid>
 
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Virtual Hosts" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False"
-                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                      SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      LostFocus="DataGrid_LostFocus">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
@@ -83,42 +93,8 @@
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="5" DataContext="{Binding SelectedVirtualHost}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="36"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="BorderThickness" Value="2"/>
-                    <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Grid.Resources>
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="0,0,5,0">
-                <Label>Virtual Host:</Label>
-                <TextBox Text="{Binding VirtualHostName}" />
-                <Label>Port:</Label>
-                <TextBox Text="{Binding Port, FallbackValue=80, TargetNullValue=80}" />
-                <Label>Server Name:</Label>
-                <TextBox Text="{Binding ServerName}" />
-                <Label>Document Root:</Label>
-                <TextBox Text="{Binding DocumentRoot}" />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="5,0,0,0">
-                <Label>Server Alias:</Label>
-                <TextBox Text="{Binding ServerAlias, FallbackValue=N/A, TargetNullValue=N/A}" />
-                <Label>Server Admin:</Label>
-                <TextBox Text="{Binding ServerAdmin, FallbackValue=N/A, TargetNullValue=N/A}" />
-                <Label>Error Log:</Label>
-                <TextBox Text="{Binding ErrorLog, FallbackValue=N/A, TargetNullValue=N/A}" />
-                <Label>Custom Log:</Label>
-                <TextBox Text="{Binding CustomLog, FallbackValue=N/A, TargetNullValue=N/A}" />
-            </StackPanel>
+        <Grid Grid.Row="2" Margin="5">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>
     </Grid>
 </Window>

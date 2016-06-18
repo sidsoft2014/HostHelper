@@ -9,7 +9,11 @@ namespace ApacheLib.ViewModels
     {
         public ViewModelBase()
         {
-            if(FileService == null || AppSettings == null)
+#if DEBUG
+            /// This gets rid of anoying error in UI.WPF app.xaml
+            return;
+#endif
+            if (FileService == null || AppSettings == null)
             {
                 throw new Exception("Apache lib not configured correctly. Ensure SysSettings.Init has run successfuly.");
             }
@@ -21,17 +25,17 @@ namespace ApacheLib.ViewModels
         }
 
         #region IDisposable Support
-        private bool disposedValue = false;
+        private bool isDisposed = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
                     PropertyChanged = null;
                 }
 
-                disposedValue = true;
+                isDisposed = true;
             }
         }
         public void Dispose()

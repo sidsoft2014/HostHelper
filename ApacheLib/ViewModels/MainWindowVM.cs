@@ -12,11 +12,14 @@ namespace ApacheLib.ViewModels
         private ObservableCollection<VirtualHost> _vHosts;
         private HostFileEntry _selectedHostFileEntry;
         private VirtualHost _selectedVirtualHost;
+        private IViewModel _currentViewModel;
 
         public MainWindowVM()
             :base()
         {
-            
+#if DEBUG
+            CurrentViewModel = new VirtualHostVM();
+#endif
         }
 
         public string Name
@@ -89,6 +92,24 @@ namespace ApacheLib.ViewModels
                 if(value != _selectedVirtualHost)
                 {
                     _selectedVirtualHost = value;
+                    OnPropertyChanged();
+
+                    if(CurrentViewModel != null)
+                        CurrentViewModel.SetSelectedObject(_selectedVirtualHost);
+                }
+            }
+        }
+        public IViewModel CurrentViewModel
+        {
+            get
+            {
+                return _currentViewModel;
+            }
+            private set
+            {
+                if (value != _currentViewModel)
+                {
+                    _currentViewModel = value;
                     OnPropertyChanged();
                 }
             }

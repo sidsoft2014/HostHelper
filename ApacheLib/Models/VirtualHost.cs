@@ -14,6 +14,11 @@ namespace ApacheLib.Models
         private string _customLog;
         private bool _isActive;
 
+        public VirtualHost()
+        {
+            this.ServerName = this.VirtualHostName = "New";
+            IsActive = true;
+        }
         public VirtualHost(string hostName, string serverName, string documentRoot, bool isActive)
         {
             VirtualHostName = hostName;
