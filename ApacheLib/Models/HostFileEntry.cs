@@ -8,9 +8,13 @@ namespace ApacheLib.Models
         private string _ip;
         private bool _isActive;
 
-        public HostFileEntry(string url, string ip, bool active)
+        public HostFileEntry()
         {
             Id = Guid.NewGuid();
+        }
+        public HostFileEntry(string url, string ip, bool active)
+            : this()
+        {
             Url = url;
             IP = ip;
             IsActive = active;

@@ -14,6 +14,7 @@ namespace ApacheLib.ViewModels
         private string _url;
         private List<string> _ipParts = new List<string>(4) { "", "", "", "" };
         private string _ipDelimiter = ".";
+        private VirtualHost _associatedVirtualHost;
 
         public event EventHandler OnSaved;
 
@@ -30,6 +31,21 @@ namespace ApacheLib.ViewModels
                     _currentHostFileEntry = value;
                     OnPropertyChanged();
                     ModelToView();
+                }
+            }
+        }
+        public VirtualHost AssociatedVirtualHost
+        {
+            get
+            {
+                return _associatedVirtualHost;
+            }
+            set
+            {
+                if(value != _associatedVirtualHost)
+                {
+                    _associatedVirtualHost = value;
+                    OnPropertyChanged();
                 }
             }
         }
