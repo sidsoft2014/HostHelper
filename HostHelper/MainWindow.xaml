@@ -44,7 +44,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Host File Entries" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       CanUserAddRows="False">
+                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>

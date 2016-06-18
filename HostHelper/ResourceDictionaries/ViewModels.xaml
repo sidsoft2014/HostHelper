@@ -8,5 +8,8 @@
     <DataTemplate DataType="{x:Type vm:VirtualHostVM}">
         <v:VirtualHostView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:HostFileEntryVM}">
+        <v:HostFileEntryView />
+    </DataTemplate>
     
 </ResourceDictionary>

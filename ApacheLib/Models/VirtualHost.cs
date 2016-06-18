@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace ApacheLib.Models
 {
@@ -16,10 +17,10 @@ namespace ApacheLib.Models
 
         public VirtualHost()
         {
-            this.ServerName = this.VirtualHostName = "New";
-            IsActive = true;
+            Id = Guid.NewGuid();
         }
         public VirtualHost(string hostName, string serverName, string documentRoot, bool isActive)
+            : this()
         {
             VirtualHostName = hostName;
             ServerName = serverName;
@@ -27,6 +28,7 @@ namespace ApacheLib.Models
             IsActive = isActive;
         }
 
+        public Guid Id { get; private set; }
         public bool IsActive
         {
             get

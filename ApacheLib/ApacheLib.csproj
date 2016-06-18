@@ -43,6 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HostFileService.cs" />
     <Compile Include="Services\VirtualHostService.cs" />
+    <Compile Include="ViewModels\HostFileEntryVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\VirtualHostVM.cs" />

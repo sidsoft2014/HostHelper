@@ -1,4 +1,6 @@
-﻿namespace ApacheLib.Models
+﻿using System;
+
+namespace ApacheLib.Models
 {
     public class HostFileEntry
     {
@@ -8,11 +10,13 @@
 
         public HostFileEntry(string url, string ip, bool active)
         {
+            Id = Guid.NewGuid();
             Url = url;
             IP = ip;
             IsActive = active;
         }
 
+        public Guid Id { get; private set; }
         public bool IsActive
         {
             get
@@ -30,7 +34,7 @@
             {
                 return _url;
             }
-            private set
+            set
             {
                 _url = value;
             }
@@ -41,7 +45,7 @@
             {
                 return _ip;
             }
-            private set
+            set
             {
                 _ip = value;
             }

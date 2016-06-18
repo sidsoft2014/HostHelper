@@ -88,6 +88,17 @@ namespace ApacheLib.ViewModels
                 if (value != _selectedHostFileEntry)
                 {
                     _selectedHostFileEntry = value;
+
+                    if (value != null)
+                    {
+                        if (CurrentViewModel.GetType() != typeof(HostFileEntryVM))
+                        {
+                            _selectedVirtualHost = null;
+                            CurrentViewModel = new HostFileEntryVM();
+                        }
+                        CurrentViewModel.SetSelectedObject(_selectedHostFileEntry);
+                    }
+
                     OnPropertyChanged();
                 }
             }
@@ -103,10 +114,18 @@ namespace ApacheLib.ViewModels
                 if (value != _selectedVirtualHost)
                 {
                     _selectedVirtualHost = value;
-                    OnPropertyChanged();
 
-                    if (CurrentViewModel != null)
+                    if (value != null)
+                    {
+                        if (CurrentViewModel.GetType() != typeof(VirtualHostVM))
+                        {
+                            _selectedHostFileEntry = null;
+                            CurrentViewModel = new VirtualHostVM();
+                        }
                         CurrentViewModel.SetSelectedObject(_selectedVirtualHost);
+                    }
+
+                    OnPropertyChanged();
                 }
             }
         }
@@ -154,7 +173,10 @@ namespace ApacheLib.ViewModels
             if (CurrentViewModel is VirtualHostVM)
             {
                 var vHost = ((VirtualHostVM)CurrentViewModel).SelectedVirtualHost;
-                var old = VirtualHosts.FirstOrDefault(p => p.VirtualHostName == vHost.VirtualHostName);
+                if (vHost == null)
+                    return;
+
+                var old = VirtualHosts.FirstOrDefault(p => p.Id == vHost.Id);
 
                 if (old == null)
                     VirtualHosts.Add(vHost);
@@ -166,7 +188,29 @@ namespace ApacheLib.ViewModels
                 }
 
                 // This bypasses the INotify event.
+                // Currently there doesn't seem much point firing the event, but this may change later.
                 _selectedVirtualHost = vHost;
+            }
+            else if (CurrentViewModel is HostFileEntryVM)
+            {
+                var host = ((HostFileEntryVM)CurrentViewModel).CurrentHostFileEntry;
+                if (host == null)
+                    return;
+
+                var old = HostFileEntries.FirstOrDefault(p => p.Id == host.Id);
+
+                if (old == null)
+                    HostFileEntries.Add(host);
+                else
+                {
+                    var idx = HostFileEntries.IndexOf(old);
+                    HostFileEntries.Remove(old);
+                    HostFileEntries.Insert(idx, host);
+                }
+
+                // This bypasses the INotify event.
+                // Currently there doesn't seem much point firing the event, but this may change later.
+                _selectedHostFileEntry = host;
             }
         }
     }
