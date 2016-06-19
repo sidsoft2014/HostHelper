@@ -9,6 +9,7 @@ namespace ApacheLib.Interfaces
     public interface IObjectViewModel
     {
         void SetSelectedObject(object obj);
+        void SetAssociatedObject(object obj);
         void Save();
 
         event EventHandler OnSaved;

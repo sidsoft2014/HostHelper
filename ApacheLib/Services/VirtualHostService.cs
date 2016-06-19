@@ -58,6 +58,7 @@ namespace ApacheLib.Services
             return blocks;
         }
 
+        // Tries to convert text into a virtual host object.
         public VirtualHost ConvertToVirtualHost(string input)
         {
             // Use regex to get try and get essential details. Massive use of Elvis opperator here.
@@ -68,7 +69,7 @@ namespace ApacheLib.Services
 
             // Check we have required fields.
             if (string.IsNullOrEmpty(host[0]) || string.IsNullOrEmpty(serverName) || string.IsNullOrEmpty(docRoot))
-                throw new ArgumentNullException("Required parameters not set");
+                throw new ArgumentNullException("Required parameters not parsed");
 
             var hostName = host[0];
             // Create new VirtualHost now we have minimum fields.
@@ -96,6 +97,7 @@ namespace ApacheLib.Services
             return vHost;
         }
 
+        // This is used to tidy up the actual lines of the virtual hosts blocks.
         private string StandardiseLine(string input)
         {
             if (string.IsNullOrEmpty(input))

@@ -17,7 +17,7 @@ namespace ApacheLib.ViewModels
         private VirtualHost _associatedVirtualHost;
 
         public event EventHandler OnSaved;
-
+        
         public HostFileEntry CurrentHostFileEntry
         {
             get
@@ -30,7 +30,7 @@ namespace ApacheLib.ViewModels
                 {
                     _currentHostFileEntry = value;
                     OnPropertyChanged();
-                    ModelToView();
+                    HostFileToView();
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace ApacheLib.ViewModels
             }
         }
 
-        private void ModelToView()
+        private void HostFileToView()
         {
             if (CurrentHostFileEntry == null)
                 return;
@@ -126,7 +126,7 @@ namespace ApacheLib.ViewModels
 
             Url = CurrentHostFileEntry.Url;
         }
-        private void ViewToModel()
+        private void ViewToHostFile()
         {
             if (CurrentHostFileEntry == null)
                 return;
@@ -139,7 +139,7 @@ namespace ApacheLib.ViewModels
             if (CurrentHostFileEntry == null)
                 return;
 
-            ViewToModel();
+            ViewToHostFile();
             OnSaved?.Invoke(this, null);
         }
 
@@ -149,6 +149,19 @@ namespace ApacheLib.ViewModels
             if (host == null)
                 return;
             CurrentHostFileEntry = host;
+        }
+        public void SetAssociatedObject(object obj)
+        {
+            if (obj == null)
+            {
+                AssociatedVirtualHost = null;
+                return;
+            }
+
+            var vhost = obj as VirtualHost;
+            if (vhost == null)
+                return;
+            AssociatedVirtualHost = vhost;
         }
     }
 }

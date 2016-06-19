@@ -18,6 +18,9 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
                 <Setter Property="Margin" Value="0,2,0,2"/>
             </Style>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
         </Grid.Resources>
 
         <Grid Grid.Row="0">
@@ -33,7 +36,7 @@
 
         <Grid Grid.Row="1" Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="32px" />
+                <RowDefinition Height="32" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -44,11 +47,10 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Host File Entries" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding HostFileEntries}" AutoGenerateColumns="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedHostFileEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False">
+                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="FontSize" Value="12"/>
-                    </Style>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="DarkGoldenrod"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Url" Width="1*" Binding="{Binding Url}" IsReadOnly="True"/>
@@ -80,11 +82,10 @@
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Virtual Hosts" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding VirtualHosts}" AutoGenerateColumns="False"
                       SelectionMode="Single" SelectionUnit="FullRow" SelectedItem="{Binding SelectedVirtualHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False">
+                      LostFocus="DataGrid_LostFocus" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="FontSize" Value="12"/>
-                    </Style>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="DarkGoldenrod"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ServerName" Width="1*" Binding="{Binding ServerName}" IsReadOnly="True"/>

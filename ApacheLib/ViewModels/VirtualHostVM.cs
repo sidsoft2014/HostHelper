@@ -221,6 +221,13 @@ namespace ApacheLib.ViewModels
 
             SelectedVirtualHost = vHost;
         }
+        public void SetAssociatedObject(object obj)
+        {
+            var vhost = obj as VirtualHost;
+            if (vhost == null)
+                return;
+            //AssociatedVirtualHost = vhost;
+        }
         public void Save()
         {
             ViewToModel();

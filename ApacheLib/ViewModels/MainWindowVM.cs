@@ -18,9 +18,6 @@ namespace ApacheLib.ViewModels
         public MainWindowVM()
             : base()
         {
-#if DEBUG
-            CurrentViewModel = new VirtualHostVM();
-#endif
         }
 
         public ObservableCollection<HostFileEntry> HostFileEntries
@@ -39,7 +36,7 @@ namespace ApacheLib.ViewModels
             {
                 if (value != _hostFileEntries)
                 {
-                    if(_hostFileEntries != null)
+                    if (_hostFileEntries != null)
                         _hostFileEntries.CollectionChanged -= _collectionChanged;
 
                     _hostFileEntries = value;
@@ -66,7 +63,7 @@ namespace ApacheLib.ViewModels
             {
                 if (value != _vHosts)
                 {
-                    if(_vHosts != null)
+                    if (_vHosts != null)
                         _vHosts.CollectionChanged -= _collectionChanged;
 
                     _vHosts = value;
@@ -91,11 +88,16 @@ namespace ApacheLib.ViewModels
 
                     if (value != null)
                     {
-                        if (CurrentViewModel.GetType() != typeof(HostFileEntryVM))
+                        if (CurrentViewModel == null || CurrentViewModel.GetType() != typeof(HostFileEntryVM))
                         {
+                            if (CurrentViewModel != null)
+                                ((ViewModelBase)CurrentViewModel).PropertyChanged -= _objectViewModel_PropertyChanged;
+
                             _selectedVirtualHost = null;
                             CurrentViewModel = new HostFileEntryVM();
+                            ((ViewModelBase)CurrentViewModel).PropertyChanged += _objectViewModel_PropertyChanged;
                         }
+
                         CurrentViewModel.SetSelectedObject(_selectedHostFileEntry);
                     }
 
@@ -117,10 +119,14 @@ namespace ApacheLib.ViewModels
 
                     if (value != null)
                     {
-                        if (CurrentViewModel.GetType() != typeof(VirtualHostVM))
+                        if (CurrentViewModel == null || CurrentViewModel.GetType() != typeof(VirtualHostVM))
                         {
+                            if (CurrentViewModel != null)
+                                ((ViewModelBase)CurrentViewModel).PropertyChanged -= _objectViewModel_PropertyChanged;
+
                             _selectedHostFileEntry = null;
                             CurrentViewModel = new VirtualHostVM();
+                            ((ViewModelBase)CurrentViewModel).PropertyChanged += _objectViewModel_PropertyChanged;
                         }
                         CurrentViewModel.SetSelectedObject(_selectedVirtualHost);
                     }
@@ -149,6 +155,43 @@ namespace ApacheLib.ViewModels
                         _currentViewModel.OnSaved += _currentViewModel_OnSaved;
                 }
             }
+        }
+
+
+        private void _objectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e == null)
+                return;
+
+            object obj = null;
+            switch (e.PropertyName)
+            {
+                case "CurrentHostFileEntry":
+                    // Set the backing value so we skip the actions that occur when assigning to the public property.
+                    _selectedVirtualHost = VirtualHosts.FirstOrDefault(
+                        p => p.ServerName == SelectedHostFileEntry.Url
+                        || p.ServerAlias == SelectedHostFileEntry.Url);
+
+                    // Assign found value to obj, even if null as this will tell the viewmodel to clear the property.
+                    obj = _selectedVirtualHost;
+
+                    // Now we need to raise the property changed event on the changed property to allow UI to react.
+                    OnPropertyChanged("SelectedVirtualHost");
+                    break;
+                case "SelectedVirtualHost":
+                    _selectedHostFileEntry = HostFileEntries.FirstOrDefault(
+                        p => p.Url == SelectedVirtualHost.ServerName
+                        || p.Url == SelectedVirtualHost.ServerAlias);
+
+                    obj = _selectedHostFileEntry;
+
+                    OnPropertyChanged("SelectedHostFileEntry");
+                    break;
+                default:
+                    // If not a property we want to act on we should return to prevent setting unwanted values.
+                    return;
+            }
+            CurrentViewModel.SetAssociatedObject(obj);
         }
 
         private void _collectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
