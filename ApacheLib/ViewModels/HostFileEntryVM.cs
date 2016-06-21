@@ -82,7 +82,6 @@ namespace ApacheLib.ViewModels
                 }
             }
         }
-
         public string IPDelimiter
         {
             get
@@ -142,7 +141,6 @@ namespace ApacheLib.ViewModels
             ViewToHostFile();
             OnSaved?.Invoke(this, null);
         }
-
         public void SetSelectedObject(object obj)
         {
             var host = obj as HostFileEntry;

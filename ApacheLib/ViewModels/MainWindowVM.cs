@@ -157,7 +157,11 @@ namespace ApacheLib.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Sets associated objects when required.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _objectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e == null)
@@ -193,7 +197,11 @@ namespace ApacheLib.ViewModels
             }
             CurrentViewModel.SetAssociatedObject(obj);
         }
-
+        /// <summary>
+        /// Raises the view models' property changed event when a collection changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _collectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var list = sender as ObservableCollection<dynamic>;
@@ -210,7 +218,11 @@ namespace ApacheLib.ViewModels
             if (name != "")
                 OnPropertyChanged(name);
         }
-
+        /// <summary>
+        /// Responds to the save command from the current (sub) view model.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _currentViewModel_OnSaved(object sender, System.EventArgs e)
         {
             if (CurrentViewModel is VirtualHostVM)
