@@ -95,8 +95,10 @@
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="5">
+        <Border Grid.Row="2" Margin="5" BorderThickness="2" BorderBrush="Black" CornerRadius="5">
+        <Grid>
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>
+        </Border>
     </Grid>
 </Window>
